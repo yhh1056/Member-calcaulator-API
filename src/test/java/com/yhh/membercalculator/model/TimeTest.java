@@ -15,7 +15,7 @@ class TimeTest {
     @Test
     @DisplayName("근무 시간이 생성되는지")
     void create() {
-        WorkTime workTime = new WorkTime(15, true);
+        WorkTime workTime = new WorkTime(1, 15, true);
 
         assertNotNull(workTime);
         assertEquals(15, workTime.getWorkTime());
