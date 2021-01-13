@@ -6,6 +6,7 @@ import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.model.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +43,8 @@ public class MemberController {
     @PostMapping("/members")
     public ResponseEntity<?> addMember(@RequestBody @Valid MemberDto memberDto) {
         Member member = memberDto.toEntity();
-
-        System.out.println(member.getName());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        memberCalcService.create(member);
+        return ResponseEntity.ok("resource updated");
     }
 
     @ApiOperation(value = "id로 회원 조회", notes = "id로 회원을 조회합니다.")
