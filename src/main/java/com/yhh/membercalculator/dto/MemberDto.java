@@ -27,9 +27,9 @@ public class MemberDto {
 
     private List<WorkTimeDto> workTimeDtos = new ArrayList<>();
 
-    public MemberDto(Member member) {
-        this.id = member.getId();
-        this.name = member.getName();
+    public MemberDto(Long id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public void addWorkTimeDto(WorkTimeDto workTimeDto) {
@@ -38,5 +38,13 @@ public class MemberDto {
 
     public Member toEntity() {
         return new Member(name);
+    }
+
+    public int calcTotalWage() {
+        totalWage = 0;
+        for (WorkTimeDto workTimeDto : workTimeDtos) {
+            totalWage += workTimeDto.getWeekWage();
+        }
+        return totalWage;
     }
 }
