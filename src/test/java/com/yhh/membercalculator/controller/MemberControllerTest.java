@@ -47,10 +47,10 @@ class MemberControllerTest {
     @DisplayName("/members json형태로 반환되는지")
     void getMemberJsonData() throws Exception {
         List<WorkTime> workTimes = List.of(
-            new WorkTime(10, true),
-            new WorkTime(10, true),
-            new WorkTime(10, true),
-            new WorkTime(10, true));
+            new WorkTime(1,10, true),
+            new WorkTime(1,10, true),
+            new WorkTime(1,10, true),
+            new WorkTime(1,10, true));
 
         Member member = new Member("tester");
         member.setWorkTimes(workTimes);

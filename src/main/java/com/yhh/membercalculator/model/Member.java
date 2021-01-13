@@ -47,4 +47,8 @@ public class Member {
     public void setWorkTimes(List<WorkTime> workTimes) {
         this.workTimes = workTimes;
     }
+
+    public void addWorkTime(WorkTime workTime) {
+        workTimes.add(workTime);
+    }
 }

@@ -1,8 +1,7 @@
 package com.yhh.membercalculator.controller;
 
 import com.yhh.membercalculator.dto.MemberDto;
-import com.yhh.membercalculator.dto.NameDto;
-import com.yhh.membercalculator.dto.WorkTimes;
+import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.model.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -39,9 +37,10 @@ public class MemberController {
 
     @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
     @PostMapping("/members")
-    public ResponseEntity<?> addMember(@RequestBody @Valid NameDto nameDto) {
-        Member member = nameDto.toEntity();
+    public ResponseEntity<?> addMember(@RequestBody @Valid MemberDto memberDto) {
+        Member member = memberDto.toEntity();
 
+        System.out.println(member.getName());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -56,14 +55,13 @@ public class MemberController {
 
     @ApiOperation(value = "회원 id로 근무시간 추가하기", notes = "id로 근무시간과 주휴수당여부를 추가합니다.")
     @PostMapping("/members/{id}")
-    public ResponseEntity<?> updateMemberWorkTime(@PathVariable("id") Long id, @RequestBody @Valid WorkTimes workTimes) {
-        List<Integer> times = workTimes.getTimes();
+    public ResponseEntity<?> updateMemberWorkTime(@PathVariable("id") Long id, @RequestBody @Valid WorkTimeDto workTimes) {
         return ResponseEntity.ok("resource updated");
     }
 
     @ApiOperation(value = "회원 id로 이름 변경", notes = "id로 회원의 이름을 변경합니다.")
     @PatchMapping("/members/{id}")
-    public ResponseEntity<?> updateMemberName(@PathVariable("id") Long id, @RequestBody @Valid NameDto nameDto) {
+    public ResponseEntity<?> updateMemberName(@PathVariable("id") Long id, @RequestBody @Valid MemberDto memberDto) {
 
         return ResponseEntity.ok("resource updated");
     }

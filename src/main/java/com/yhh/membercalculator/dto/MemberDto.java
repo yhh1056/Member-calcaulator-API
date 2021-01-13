@@ -1,6 +1,8 @@
 package com.yhh.membercalculator.dto;
 
 import com.yhh.membercalculator.model.Member;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,11 +23,20 @@ public class MemberDto {
     @NotNull
     private String name;
 
-    private TimeDto workWages;
+    private int totalWage;
+
+    private List<WorkTimeDto> workTimeDtos = new ArrayList<>();
 
     public MemberDto(Member member) {
         this.id = member.getId();
         this.name = member.getName();
-        this.workWages = new TimeDto(member.getWorkTimes());
+    }
+
+    public void addWorkTimeDto(WorkTimeDto workTimeDto) {
+        workTimeDtos.add(workTimeDto);
+    }
+
+    public Member toEntity() {
+        return new Member(name);
     }
 }
