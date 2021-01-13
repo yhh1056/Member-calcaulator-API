@@ -24,6 +24,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "work_time")
 public class WorkTime {
+    private static final int PAY = 8720;
+    private static final double VACATION_POLICY = 1.2;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -34,14 +36,25 @@ public class WorkTime {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private int week;
+
     private int workTime;
 
-    private boolean optionCheck;
+    private boolean isVacationPay;
 
     private int weekWage;
 
-    public WorkTime(int workTime, boolean optionCheck) {
+    public WorkTime(int week, int workTime, boolean isVacationPay) {
+        this.week = week;
         this.workTime = workTime;
-        this.optionCheck = optionCheck;
+        this.isVacationPay = isVacationPay;
+        this.weekWage = calcPay(workTime, isVacationPay);
+    }
+
+    private int calcPay(int workTime, boolean isVacationPay) {
+        if (isVacationPay) {
+            return (int) (workTime * PAY * VACATION_POLICY);
+        }
+        return workTime * PAY;
     }
 }

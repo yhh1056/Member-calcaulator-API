@@ -27,9 +27,9 @@ class MemberTest {
     @DisplayName("근무시간이 주입되는지")
     void setWorkTime() {
         List<WorkTime> workTimes = List.of(
-                new WorkTime(10, true),
-                new WorkTime(10, true),
-                new WorkTime(10, true));
+                new WorkTime(1,10, true),
+                new WorkTime(1,10, true),
+                new WorkTime(1,10, true));
 
         Member member = new Member("tester");
         member.setWorkTimes(workTimes);
