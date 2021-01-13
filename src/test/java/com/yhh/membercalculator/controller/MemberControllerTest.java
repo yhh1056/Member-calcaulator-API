@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yhh.membercalculator.dto.MemberDto;
+import com.yhh.membercalculator.dto.NameDto;
 import com.yhh.membercalculator.model.Member;
 import com.yhh.membercalculator.model.WorkTime;
 import java.util.ArrayList;
@@ -17,9 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,16 +72,16 @@ class MemberControllerTest {
     @Test
     @DisplayName("/members 멤버 데이터를 이용하여 멤버 생성")
     void createMember() throws Exception {
-        MemberDto memberDto = new MemberDto();
-        memberDto.setName("tester");
+        NameDto nameDto = new NameDto();
+        nameDto.setName("tester");
 
-        when(memberController.addMember(memberDto)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED
+        when(memberController.addMember(nameDto)).thenReturn(new ResponseEntity<>(HttpStatus.CREATED
         ));
 
         mockMvc.perform(post("/members")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(memberDto)))
+            .content(objectMapper.writeValueAsString(nameDto)))
             .andExpect(status().isOk())
             .andDo(print());
     }

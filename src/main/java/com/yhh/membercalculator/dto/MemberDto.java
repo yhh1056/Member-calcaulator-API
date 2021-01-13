@@ -28,8 +28,4 @@ public class MemberDto {
         this.name = member.getName();
         this.workWages = new TimeDto(member.getWorkTimes());
     }
-
-    public Member toEntity(String name) {
-        return new Member(name);
-    }
 }

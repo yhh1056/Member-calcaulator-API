@@ -1,6 +1,7 @@
 package com.yhh.membercalculator.controller;
 
 import com.yhh.membercalculator.dto.MemberDto;
+import com.yhh.membercalculator.dto.NameDto;
 import com.yhh.membercalculator.model.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,10 +34,8 @@ public class MemberController {
 
     @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
     @PostMapping("/members")
-    public ResponseEntity<?> addMember(@RequestBody @Valid MemberDto memberDto) {
-
-        Member member = memberDto.toEntity(memberDto.getName());
-        System.out.println(member.getName());
+    public ResponseEntity<?> addMember(@RequestBody @Valid NameDto nameDto) {
+        Member member = nameDto.toEntity();
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
