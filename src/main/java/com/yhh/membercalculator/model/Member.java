@@ -2,9 +2,12 @@ package com.yhh.membercalculator.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,8 +28,10 @@ public class Member {
 
     private String name;
 
+    @OneToMany(mappedBy = "member")
+    private List<WorkTime> workTimes = new ArrayList<>();
+
     public Member(String name) {
         this.name = name;
     }
-
 }
