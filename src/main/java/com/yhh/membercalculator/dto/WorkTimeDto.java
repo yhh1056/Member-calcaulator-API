@@ -20,4 +20,6 @@ public class WorkTimeDto {
     private int workTime;
 
     private boolean isVacationPay;
+
+    private int weekWage;
 }
