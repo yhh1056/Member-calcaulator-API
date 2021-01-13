@@ -10,6 +10,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,6 +66,15 @@ public class MemberController {
     public ResponseEntity<?> updateMemberName(@PathVariable("id") Long id, @RequestBody @Valid NameDto nameDto) {
 
         return ResponseEntity.ok("resource updated");
+    }
+
+    @ApiOperation(value = "회원 id로 회원 삭제", notes = "id로 회원을 삭제합니다.")
+    @DeleteMapping("/members/{id}")
+    public ResponseEntity<?> deleteMember(@PathVariable("id") Long id) {
+        /**
+         * 회원 삭제 기능
+         */
+        return ResponseEntity.ok("resource delete");
     }
 
 }
