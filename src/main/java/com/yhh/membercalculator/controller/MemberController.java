@@ -2,6 +2,8 @@ package com.yhh.membercalculator.controller;
 
 import com.yhh.membercalculator.dto.MemberDto;
 import com.yhh.membercalculator.model.Member;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -16,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2021/01/13
  */
 
+@Api(tags = {"1. Member"})
 @RestController
 public class MemberController {
 
+    @ApiOperation(value = "전체 회원 정보 조회", notes = "게시판에 나타낼 모든 회원 정보를 조회합니다.")
     @GetMapping("/members")
     public ResponseEntity<List<MemberDto>> getMembers() {
         /**
@@ -27,6 +31,7 @@ public class MemberController {
         return new ResponseEntity(null, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
     @PostMapping("/members")
     public ResponseEntity<?> addMember(@RequestBody @Valid MemberDto memberDto) {
 
