@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/member_calc?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: 1235
+  jpa:
+    hibernate.ddl-auto: create
+    generate-ddl: true
+    show-sql: true
