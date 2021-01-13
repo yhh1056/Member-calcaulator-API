@@ -2,6 +2,7 @@ package com.yhh.membercalculator.controller;
 
 import com.yhh.membercalculator.dto.MemberDto;
 import com.yhh.membercalculator.dto.NameDto;
+import com.yhh.membercalculator.dto.WorkTimes;
 import com.yhh.membercalculator.model.Member;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,10 +11,10 @@ import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -49,5 +50,12 @@ public class MemberController {
          * repository에서 회원 가져오기
          */
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "회원 id로 근무시간 추가하기", notes = "id로 근무시간과 주휴수당여부를 추가합니다.")
+    @PostMapping("/members/{id}")
+    public ResponseEntity<?> updateMemberWorkTime(@PathVariable("id") Long id, @RequestBody @Valid WorkTimes workTimes) {
+        List<Integer> times = workTimes.getTimes();
+        return ResponseEntity.ok("resource updated");
     }
 }
