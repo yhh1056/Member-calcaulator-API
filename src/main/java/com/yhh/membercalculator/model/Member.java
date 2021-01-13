@@ -34,4 +34,11 @@ public class Member {
     public Member(String name) {
         this.name = name;
     }
+
+    /**
+     * 테스트를 위해 임시적으로 만듬
+     */
+    public void setWorkTimes(List<WorkTime> workTimes) {
+        this.workTimes = workTimes;
+    }
 }
