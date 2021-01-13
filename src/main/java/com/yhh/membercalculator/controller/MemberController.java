@@ -50,10 +50,8 @@ public class MemberController {
     @ApiOperation(value = "id로 회원 조회", notes = "id로 회원을 조회합니다.")
     @GetMapping("/members/{id}")
     public ResponseEntity<Member> getMember(@PathVariable("id") Long id) {
-        /**
-         * repository에서 회원 가져오기
-         */
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        Member member = memberCalcService.findMember(id);
+        return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원 id로 근무시간 추가하기", notes = "id로 근무시간과 주휴수당여부를 추가합니다.")

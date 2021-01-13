@@ -27,4 +27,8 @@ public class MemberCalcService {
     public void create(Member member) {
         memberRepository.save(member);
     }
+
+    public Member findMember(Long memberId) {
+        return memberRepository.findById(memberId);
+    }
 }
