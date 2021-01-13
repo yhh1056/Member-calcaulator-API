@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -58,4 +59,12 @@ public class MemberController {
         List<Integer> times = workTimes.getTimes();
         return ResponseEntity.ok("resource updated");
     }
+
+    @ApiOperation(value = "회원 id로 이름 변경", notes = "id로 회원의 이름을 변경합니다.")
+    @PatchMapping("/members/{id}")
+    public ResponseEntity<?> updateMemberName(@PathVariable("id") Long id, @RequestBody @Valid NameDto nameDto) {
+
+        return ResponseEntity.ok("resource updated");
+    }
+
 }
