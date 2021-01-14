@@ -90,16 +90,13 @@ public class MemberController {
     @ApiOperation(value = "회원 id로 이름 변경", notes = "id로 회원의 이름을 변경합니다.")
     @PatchMapping("/members/{id}")
     public ResponseEntity<?> updateMemberName(@PathVariable("id") Long id, @RequestBody @Valid MemberDto memberDto) {
-
+        memberCalcService.updateMember(id, memberDto.getName());
         return ResponseEntity.ok("resource updated");
     }
 
     @ApiOperation(value = "회원 id로 회원 삭제", notes = "id로 회원을 삭제합니다.")
     @DeleteMapping("/members/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable("id") Long id) {
-        /**
-         * 회원 삭제 기능
-         */
         return ResponseEntity.ok("resource delete");
     }
 

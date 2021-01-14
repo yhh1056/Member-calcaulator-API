@@ -52,4 +52,8 @@ public class Member {
         workTime.setMember(this);
         workTimes.add(workTime);
     }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
 }

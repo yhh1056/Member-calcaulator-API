@@ -42,4 +42,11 @@ public class MemberCalcService {
             memberRepository.save(member);
         }
     }
+
+    @Transactional
+    public void updateMember(Long id, String name) {
+        Member member = memberRepository.findById(id);
+        member.changeName(name);
+        memberRepository.save(member);
+    }
 }
