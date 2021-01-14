@@ -49,4 +49,10 @@ public class MemberCalcService {
         member.changeName(name);
         memberRepository.save(member);
     }
+
+    @Transactional
+    public void deleteMember(Long id) {
+        Member member = memberRepository.findById(id);
+        memberRepository.remove(member);
+    }
 }

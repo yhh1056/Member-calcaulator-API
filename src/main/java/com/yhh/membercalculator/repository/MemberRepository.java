@@ -32,4 +32,8 @@ public class MemberRepository {
     public void delete(Member member) {
         entityManager.remove(member);
     }
+
+    public void remove(Member member) {
+        entityManager.remove(member);
+    }
 }

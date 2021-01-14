@@ -97,6 +97,7 @@ public class MemberController {
     @ApiOperation(value = "회원 id로 회원 삭제", notes = "id로 회원을 삭제합니다.")
     @DeleteMapping("/members/{id}")
     public ResponseEntity<?> deleteMember(@PathVariable("id") Long id) {
+        memberCalcService.deleteMember(id);
         return ResponseEntity.ok("resource delete");
     }
 
