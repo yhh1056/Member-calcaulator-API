@@ -7,6 +7,7 @@ import com.yhh.membercalculator.model.Member;
 import com.yhh.membercalculator.model.WorkTime;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,22 @@ public class MemberController {
     @GetMapping("/members")
     public ResponseEntity<List<MemberDto>> getMembers() {
         List<Member> members = memberCalcService.getAllMembers();
-        return new ResponseEntity(members, HttpStatus.OK);
+        List<MemberDto> memberDtos = new ArrayList<>();
+        for (Member member : members) {
+            MemberDto memberDto = new MemberDto(member.getId(), member.getName());
+            List<WorkTime> workTimes = member.getWorkTimes();
+            for (WorkTime workTime : workTimes) {
+                memberDto.addWorkTimeDto(WorkTimeDto.builder()
+                    .week(workTime.getWeek())
+                    .weekWage(workTime.getWeekWage())
+                    .workTime(workTime.getWorkTime())
+                    .isVacationPay(workTime.isVacationPay())
+                    .build());
+            }
+            memberDto.calcTotalWage();
+            memberDtos.add(memberDto);
+        }
+        return new ResponseEntity(memberDtos, HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
