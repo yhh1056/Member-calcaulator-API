@@ -4,9 +4,9 @@ import com.yhh.membercalculator.MemberCalcService;
 import com.yhh.membercalculator.dto.MemberDto;
 import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.model.Member;
+import com.yhh.membercalculator.model.WorkTime;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import java.net.URI;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -49,14 +49,25 @@ public class MemberController {
 
     @ApiOperation(value = "id로 회원 조회", notes = "id로 회원을 조회합니다.")
     @GetMapping("/members/{id}")
-    public ResponseEntity<Member> getMember(@PathVariable("id") Long id) {
+    public ResponseEntity<WorkTimeDto> getMember(@PathVariable("id") Long id) {
         Member member = memberCalcService.findMember(id);
-        return new ResponseEntity<>(member, HttpStatus.OK);
+
+        MemberDto memberDto = new MemberDto(member.getId(), member.getName());
+        List<WorkTime> workTimes = member.getWorkTimes();
+        for (WorkTime workTime : workTimes) {
+            memberDto.addWorkTimeDto(new WorkTimeDto(workTime.getWeek(), workTime.getWorkTime(),
+                    workTime.isVacationPay(), workTime.getWeekWage()));
+        }
+        memberDto.calcTotalWage();
+
+        return new ResponseEntity(memberDto, HttpStatus.OK);
     }
 
     @ApiOperation(value = "회원 id로 근무시간 추가하기", notes = "id로 근무시간과 주휴수당여부를 추가합니다.")
     @PostMapping("/members/{id}")
-    public ResponseEntity<?> updateMemberWorkTime(@PathVariable("id") Long id, @RequestBody @Valid WorkTimeDto workTimes) {
+    public ResponseEntity<?> updateMemberWorkTime(@PathVariable("id") Long id,
+            @RequestBody @Valid List<WorkTimeDto> workTimes) {
+        memberCalcService.updateWorkTime(id, workTimes);
         return ResponseEntity.ok("resource updated");
     }
 

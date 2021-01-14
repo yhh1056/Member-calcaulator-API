@@ -57,4 +57,8 @@ public class WorkTime {
         }
         return workTime * PAY;
     }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }

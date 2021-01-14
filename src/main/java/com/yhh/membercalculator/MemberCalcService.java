@@ -1,6 +1,8 @@
 package com.yhh.membercalculator;
 
+import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.model.Member;
+import com.yhh.membercalculator.model.WorkTime;
 import com.yhh.membercalculator.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberCalcService {
 
     private final MemberRepository memberRepository;
-    private final WorkTimeRepository workTimeRepository;
 
     public List<Member> getAllMembers() {
         return memberRepository.findAll();
@@ -30,5 +31,15 @@ public class MemberCalcService {
 
     public Member findMember(Long memberId) {
         return memberRepository.findById(memberId);
+    }
+
+    public void updateWorkTime(Long memberId, List<WorkTimeDto> workTimeDtos) {
+        for (WorkTimeDto workTimeDto : workTimeDtos) {
+            Member member = memberRepository.findById(memberId);
+            WorkTime workTime = new WorkTime(workTimeDto.getWeek(), workTimeDto.getWorkTime(),
+                workTimeDto.isVacationPay());
+            member.addWorkTime(workTime);
+            memberRepository.save(member);
+        }
     }
 }

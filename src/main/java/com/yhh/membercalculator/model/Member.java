@@ -49,6 +49,7 @@ public class Member {
     }
 
     public void addWorkTime(WorkTime workTime) {
+        workTime.setMember(this);
         workTimes.add(workTime);
     }
 }
