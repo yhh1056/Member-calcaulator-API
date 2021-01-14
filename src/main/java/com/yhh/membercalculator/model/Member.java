@@ -3,6 +3,7 @@ package com.yhh.membercalculator.model;
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.GenerationType.IDENTITY;
 
+import com.yhh.membercalculator.dto.WorkTimeDto;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -37,6 +38,8 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = ALL)
     private List<WorkTime> workTimes = new ArrayList<>();
 
+    private int totalWage;
+
     public Member(String name) {
         this.name = name;
     }
@@ -55,5 +58,13 @@ public class Member {
 
     public void changeName(String name) {
         this.name = name;
+    }
+
+    public int calcTotalWage() {
+        totalWage = 0;
+        for (WorkTime workTime : workTimes) {
+            totalWage += workTime.getWeekWage();
+        }
+        return totalWage;
     }
 }

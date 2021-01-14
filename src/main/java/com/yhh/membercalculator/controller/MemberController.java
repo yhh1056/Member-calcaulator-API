@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,23 +37,43 @@ public class MemberController {
     @ApiOperation(value = "전체 회원 정보 조회", notes = "게시판에 나타낼 모든 회원 정보를 조회합니다.")
     @GetMapping("/members")
     public ResponseEntity<List<MemberDto>> getMembers() {
-        List<Member> members = memberCalcService.getAllMembers();
-        List<MemberDto> memberDtos = new ArrayList<>();
-        for (Member member : members) {
-            MemberDto memberDto = new MemberDto(member.getId(), member.getName());
-            List<WorkTime> workTimes = member.getWorkTimes();
-            for (WorkTime workTime : workTimes) {
-                memberDto.addWorkTimeDto(WorkTimeDto.builder()
-                    .week(workTime.getWeek())
-                    .weekWage(workTime.getWeekWage())
-                    .workTime(workTime.getWorkTime())
-                    .isVacationPay(workTime.isVacationPay())
-                    .build());
-            }
-            memberDto.calcTotalWage();
-            memberDtos.add(memberDto);
+        List<MemberDto> membersDto = createMembersDto(memberCalcService.getAllMembers());
+        return new ResponseEntity(membersDto, HttpStatus.OK);
+    }
+
+    private List<MemberDto> createMembersDto(List<Member> members) {
+        return members.stream()
+                .map(this::createMemberDto)
+                .collect(Collectors.toList());
+    }
+
+    private MemberDto createMemberDto(Member member) {
+        member.calcTotalWage();
+        MemberDto memberDto = buildMemberDto(member);
+        createWorkTimeDto(member, memberDto.getWorkTimes());
+        return memberDto;
+    }
+
+    private MemberDto buildMemberDto(Member member) {
+        return MemberDto.builder()
+                .memberId(member.getId())
+                .name(member.getName())
+                .totalWage(member.getTotalWage())
+                .build();
+    }
+    private void createWorkTimeDto(Member member, List<WorkTimeDto> workTimesDto) {
+        for (WorkTime workTime : member.getWorkTimes()) {
+            workTimesDto.add(buildWorkTimeDto(workTime));
         }
-        return new ResponseEntity(memberDtos, HttpStatus.OK);
+    }
+
+    private WorkTimeDto buildWorkTimeDto(WorkTime workTime) {
+        return WorkTimeDto.builder()
+            .week(workTime.getWeek())
+            .weekWage(workTime.getWeekWage())
+            .workTime(workTime.getWorkTime())
+            .isVacationPay(workTime.isVacationPay())
+            .build();
     }
 
     @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
@@ -66,16 +87,7 @@ public class MemberController {
     @ApiOperation(value = "id로 회원 조회", notes = "id로 회원을 조회합니다.")
     @GetMapping("/members/{id}")
     public ResponseEntity<WorkTimeDto> getMember(@PathVariable("id") Long id) {
-        Member member = memberCalcService.findMember(id);
-
-        MemberDto memberDto = new MemberDto(member.getId(), member.getName());
-        List<WorkTime> workTimes = member.getWorkTimes();
-        for (WorkTime workTime : workTimes) {
-            memberDto.addWorkTimeDto(new WorkTimeDto(workTime.getWeek(), workTime.getWorkTime(),
-                    workTime.isVacationPay(), workTime.getWeekWage()));
-        }
-        memberDto.calcTotalWage();
-
+        MemberDto memberDto = createMemberDto(memberCalcService.findMember(id));
         return new ResponseEntity(memberDto, HttpStatus.OK);
     }
 
