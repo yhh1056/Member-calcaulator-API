@@ -1,10 +1,13 @@
 package com.yhh.membercalculator.dto;
 
 import com.yhh.membercalculator.model.Member;
+import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * @author yhh1056
