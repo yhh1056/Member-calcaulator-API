@@ -1,4 +1,4 @@
-package com.yhh.membercalculator;
+package com.yhh.membercalculator.service;
 
 import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.model.Member;
@@ -30,7 +30,11 @@ public class MemberCalcService {
     }
 
     public Member findMember(Long memberId) {
-        return memberRepository.findById(memberId);
+        Member member = memberRepository.findById(memberId);
+        if (member == null) {
+            throw new NullPointerException();
+        }
+        return member;
     }
 
     public void updateWorkTime(Long memberId, List<WorkTimeDto> workTimeDtos) {

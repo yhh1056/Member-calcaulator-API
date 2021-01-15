@@ -1,6 +1,6 @@
 package com.yhh.membercalculator.controller;
 
-import com.yhh.membercalculator.MemberCalcService;
+import com.yhh.membercalculator.service.MemberCalcService;
 import com.yhh.membercalculator.dto.MemberDto;
 import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.model.Member;

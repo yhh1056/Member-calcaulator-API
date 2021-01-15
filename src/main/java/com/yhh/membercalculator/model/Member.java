@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -52,6 +53,9 @@ public class Member {
     }
 
     public void addWorkTime(WorkTime workTime) {
+        if (workTimes.size() >= 6) {
+            throw new IllegalArgumentException();
+        }
         workTime.setMember(this);
         workTimes.add(workTime);
     }
