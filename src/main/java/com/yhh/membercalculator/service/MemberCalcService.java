@@ -40,8 +40,11 @@ public class MemberCalcService {
     public void updateWorkTime(Long memberId, List<WorkTimeDto> workTimeDtos) {
         for (WorkTimeDto workTimeDto : workTimeDtos) {
             Member member = memberRepository.findById(memberId);
-            WorkTime workTime = new WorkTime(workTimeDto.getWeek(), workTimeDto.getWorkTime(),
+            WorkTime workTime = new WorkTime(workTimeDto.getWeekNumber(), workTimeDto.getWorkTime(),
                 workTimeDto.isVacationPay());
+            if (workTime.getWeekNumber() == workTimeDto.getWeekNumber()) {
+                throw new IllegalArgumentException("중복되는 주가 있습니다");
+            }
             member.addWorkTime(workTime);
             memberRepository.save(member);
         }

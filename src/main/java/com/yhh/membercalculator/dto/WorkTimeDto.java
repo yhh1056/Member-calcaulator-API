@@ -1,5 +1,8 @@
 package com.yhh.membercalculator.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -11,11 +14,18 @@ import lombok.Getter;
 @Getter
 @Builder
 public class WorkTimeDto {
-    private int week;
 
+    @Max(5)
+    @Min(0)
+    @NotNull
+    private int weekNumber;
+
+    @NotNull
     private int workTime;
 
+    @NotNull
     private boolean isVacationPay;
 
+    @NotNull
     private int weekWage;
 }

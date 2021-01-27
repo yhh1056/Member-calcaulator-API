@@ -36,7 +36,7 @@ public class WorkTime {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private int week;
+    private int weekNumber;
 
     private int workTime;
 
@@ -44,8 +44,8 @@ public class WorkTime {
 
     private int weekWage;
 
-    public WorkTime(int week, int workTime, boolean isVacationPay) {
-        this.week = week;
+    public WorkTime(int weekNumber, int workTime, boolean isVacationPay) {
+        this.weekNumber = weekNumber;
         this.workTime = workTime;
         this.isVacationPay = isVacationPay;
         this.weekWage = calcPay(workTime, isVacationPay);

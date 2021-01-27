@@ -29,8 +29,4 @@ public class MemberDto {
     public Member toEntity() {
         return new Member(name);
     }
-
-    public void addWorkTimeDto(WorkTimeDto workTimeDto) {
-        this.workTimes.add(workTimeDto);
-    }
 }

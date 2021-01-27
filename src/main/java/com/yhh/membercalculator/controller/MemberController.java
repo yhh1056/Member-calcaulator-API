@@ -65,7 +65,7 @@ public class MemberController {
 
     private WorkTimeDto buildWorkTimeDto(WorkTime workTime) {
         return WorkTimeDto.builder()
-                .week(workTime.getWeek())
+                .weekNumber(workTime.getWeekNumber())
                 .weekWage(workTime.getWeekWage())
                 .workTime(workTime.getWorkTime())
                 .isVacationPay(workTime.isVacationPay())
@@ -75,7 +75,7 @@ public class MemberController {
     @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
     @PostMapping("/members")
     public ResponseEntity<?> addMember(@RequestBody @Valid MemberDto memberDto) {
-        memberCalcService.create( memberDto.toEntity());
+        memberCalcService.create(memberDto.toEntity());
         return ResponseEntity.ok("resource updated");
     }
 
