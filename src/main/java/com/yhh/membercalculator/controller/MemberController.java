@@ -72,6 +72,17 @@ public class MemberController {
                 .build();
     }
 
+    @ApiOperation(value = "전체 회원 정보 조회", notes = "게시판에 나타낼 모든 회원 정보를 조회합니다.")
+    @ApiResponses({
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 404, message = "Not Found")
+    }
+    )
+    @GetMapping("/members")
+    public ResponseEntity<List<MemberDto>> getMembers() {
+        return new ResponseEntity(createMembersDto(memberCalcService.getAllMembers()), HttpStatus.OK);
+    }
+
     @ApiOperation(value = "회원 추가", notes = "이름으로 회원을 추가합니다.")
     @PostMapping("/members")
     public ResponseEntity<?> addMember(@RequestBody @Valid MemberDto memberDto) {
