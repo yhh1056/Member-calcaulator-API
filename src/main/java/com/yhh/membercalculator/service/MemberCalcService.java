@@ -46,7 +46,7 @@ public class MemberCalcService {
 
     private Member findMemberById(Long memberId) {
         return memberRepository.findById(memberId)
-            .orElseThrow(() -> new ResourceNotFoundException());
+            .orElseThrow(ResourceNotFoundException::new);
     }
 
     @Transactional
@@ -63,6 +63,7 @@ public class MemberCalcService {
             }
             WorkTime workTime = new WorkTime(workTimeDto.getWeekNumber(), workTimeDto.getWorkTime(), workTimeDto.isVacationPay());
             member.addWorkTime(workTime);
+            member.calcTotalWage();
             memberRepository.save(member);
         }
 

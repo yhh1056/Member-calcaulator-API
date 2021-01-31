@@ -45,13 +45,6 @@ public class Member {
         this.name = name;
     }
 
-    /**
-     * 테스트를 위해 임시적으로 만듬
-     */
-    public void setWorkTimes(List<WorkTime> workTimes) {
-        this.workTimes = workTimes;
-    }
-
     public void addWorkTime(WorkTime workTime) {
         if (workTimes.size() >= 6) {
             throw new IllegalArgumentException();
@@ -70,5 +63,10 @@ public class Member {
             totalWage += workTime.getWeekWage();
         }
         return totalWage;
+    }
+
+    public boolean isExistWeekNumber(int weekNumber) {
+        return workTimes.stream()
+                    .noneMatch(workTime -> workTime.getWeekNumber() == weekNumber);
     }
 }
