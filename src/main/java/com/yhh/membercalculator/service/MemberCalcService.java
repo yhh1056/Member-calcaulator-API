@@ -1,5 +1,6 @@
 package com.yhh.membercalculator.service;
 
+import com.yhh.membercalculator.dto.MemberDto;
 import com.yhh.membercalculator.dto.WorkTimeDto;
 import com.yhh.membercalculator.exception.ResourceNotFoundException;
 import com.yhh.membercalculator.model.Member;
@@ -45,28 +46,26 @@ public class MemberCalcService {
 
     private Member findMemberById(Long memberId) {
         return memberRepository.findById(memberId)
-                .orElseThrow(() ->  new ResourceNotFoundException());
-    }
-
-    public void updateWorkTime(Long memberId, List<WorkTimeDto> workTimeDtos) {
-        Member member = findMemberById(memberId);
-        logger.debug(member.getName());
-        for (WorkTimeDto workTimeDto : workTimeDtos) {
-            if (member.isExistWeekNumber(workTimeDto.getWeekNumber())) {
-                throw new IllegalArgumentException("같은 주가 존재합니다.");
-            }
-            WorkTime workTime = new WorkTime(workTimeDto.getWeekNumber(), workTimeDto.getWorkTime(),
-                workTimeDto.isVacationPay());
-            member.addWorkTime(workTime);
-            memberRepository.save(member);
-        }
+            .orElseThrow(() -> new ResourceNotFoundException());
     }
 
     @Transactional
-    public void updateMember(Long memberId, String name) {
+    public void updateWorkTime(Long memberId, MemberDto memberDto) {
         Member member = findMemberById(memberId);
-        member.changeName(name);
-        memberRepository.save(member);
+        if (!memberDto.getName().equals(member.getName())) {
+            member.changeName(memberDto.getName());
+        }
+
+        final List<WorkTimeDto> workTimes = memberDto.getWorkTimes();
+        for (WorkTimeDto workTimeDto : workTimes) {
+            if (member.isExistWeekNumber(workTimeDto.getWeekNumber())) {
+                throw new IllegalArgumentException("같은 주가 존재합니다.");
+            }
+            WorkTime workTime = new WorkTime(workTimeDto.getWeekNumber(), workTimeDto.getWorkTime(), workTimeDto.isVacationPay());
+            member.addWorkTime(workTime);
+            memberRepository.save(member);
+        }
+
     }
 
     @Transactional

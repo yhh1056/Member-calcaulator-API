@@ -5,6 +5,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author yhh1056
@@ -12,7 +13,7 @@ import lombok.Getter;
  */
 
 @Getter
-@Builder
+@Setter
 public class WorkTimeDto {
 
     @Max(5)

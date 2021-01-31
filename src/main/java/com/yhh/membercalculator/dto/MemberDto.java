@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author yhh1056
@@ -15,14 +16,14 @@ import lombok.NoArgsConstructor;
  */
 
 @Getter
-@Builder
+@Setter
 public class MemberDto {
     private Long memberId;
 
     @NotNull
     private String name;
 
-    private List<WorkTimeDto> workTimes;
+    private List<WorkTimeDto> workTimes = new ArrayList<>();
 
     private int totalWage;
 
