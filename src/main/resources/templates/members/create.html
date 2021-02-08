@@ -1,10 +1,136 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--<link rel="stylesheet" href="/css/createMemberForm.css"/>-->
+<link rel="stylesheet" href="/css/head.css"/>
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100px;
+    font-size: 1.5rem;
+    background-color: #222222;
+  }
+
+  input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .fieldError {
+    border-color: #bd2130;
+    color: red;
+  }
+
+  .container {
+    margin-top: 50px;
+    background-color: gray;
+  }
+  .input-box {
+    width: 70%;
+    margin-left: 48px;
+    text-align: center;
+    font-size: 15pt;
+  }
+  .head-text {
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 24pt;
+    letter-spacing: 5px;
+  }
+
+  .btn {
+    /*position: absolute;!**!*/
+    left: 10px;
+    margin-top: 30px;
+    top: 10px;
+    padding: 10px;
+    font-size: 16pt;
+    letter-spacing: 7px;
+    background-color: #3e70ff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+    align-content: center;
+  }
+</style>
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
 </head>
+
 <body>
-하이
+<div>
+  <div>
+    <button class="title" onclick="location.href='/'">COFFEE HOLE</button>
+  </div>
+
+  <form id="form" action="/members" method="post">
+    <div class="container">
+      <div>
+        <div class="head-text">
+          직원등록
+        </div>
+
+        <div class="input-box">
+          <input type="text" name="name" placeholder="직원의 이름을 입력해주세요"/>
+        </div>
+        <div>
+          <button id="button" class="btn" type="submit">추가</button>
+        </div>
+      </div>
+
+    </div>
+  </form>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+  <script>
+    window.addEventListener("load", function () {
+      document.getElementById("form").addEventListener("submit", async function (submitEvent) {
+        submitEvent.preventDefault();
+        const formData = new FormData(this);
+
+        const requestJson = JSON.stringify(getObjectByFormData(formData))
+        try {
+          const response = await axios.post(`${location.origin}${this.getAttribute("action")}`,
+              requestJson, {
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              });
+
+          if (response.status !== 200) {
+            throw "실패했어요"
+          }
+
+          location.href = `${location.origin}/`
+        } catch (e) {
+          alert("실패했어요")
+        }
+
+      });
+    });
+
+    function getObjectByFormData(formData) {
+      let form = {};
+      formData.forEach((key, value) => {
+        form[value] = key;
+      });
+
+      return form;
+
+    }
+  </script>
+
+</div>
 </body>
 </html>
+

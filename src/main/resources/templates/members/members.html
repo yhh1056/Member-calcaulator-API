@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="/css/list.css">
+<link rel="stylesheet" href="/css/head.css">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<body>
+<div style="text-align: center;">
+  <div>
+    <button class="title" onclick="location.href='/'">COFFEE HOLE</button>
+  </div>
+
+  <table class="tb" border="1">
+    <thead>
+      <th>번호</th>
+      <th>이름</th>
+      <th>1주차</th>
+      <th>2주차</th>
+      <th>3주차</th>
+      <th>4주차</th>
+      <th>5주차</th>
+      <th>월급</th>
+    </thead>
+    <tbody id="body">
+
+    </tbody>
+
+  </table>
+</div>
+<script>
+  window.addEventListener('load', async () => {
+    const members = await (await fetch(`${location.origin}/members`)).json();
+
+    document.getElementById('body').innerHTML = `${
+        members.map(member => `
+        <tr>
+            <td> ${member.id}</td>
+            <td> ${member.name}</td>
+
+           ${member.workTimes.map(workTime =>
+            `<td> ${workTime.weekWage} </td>`
+        ).join('')}
+
+           <td> ${member.totalWage}</td>
+        </tr>
+
+      `).join('')
+    }
+    <tr>
+        <td colspan="5"> 총 인건비</td>
+        <td colspan="3"></td>
+    </tr>
+    `
+  })
+</script>
+</body>
+</html>
