@@ -3,6 +3,8 @@ package com.yhh.membercalculator.model;
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,16 +26,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "work_time")
 public class WorkTime {
+
     private static final int PAY = 8720;
     private static final double VACATION_POLICY = 1.2;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "work_time_id")
+    @JsonIgnore
     private Long id;
 
     @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
+    @JsonBackReference
     private Member member;
 
     private int weekNumber;
@@ -61,4 +66,5 @@ public class WorkTime {
     public void setMember(Member member) {
         this.member = member;
     }
+
 }
